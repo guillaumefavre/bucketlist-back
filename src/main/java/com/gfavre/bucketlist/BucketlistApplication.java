@@ -22,14 +22,6 @@ public class BucketlistApplication implements CommandLineRunner {
 	@Override
   public void run(String... args) throws Exception {
 
-    repository.deleteAll();
-
-    // save a couple of items
-    repository.save(new Item("Sport", "Courir un marathon"));
-    repository.save(new Item("Voyage", "Voyager en Australie"));
-    repository.save(new Item("Développement personnel", "Parler anglais couramment"));
-    repository.save(new Item("Voyage", "Aller à New-York"));
-
     // fetch all customers
     System.out.println("Items found with findAll():");
     System.out.println("-------------------------------");
