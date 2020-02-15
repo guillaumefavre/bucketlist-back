@@ -36,7 +36,7 @@ public class ItemRestController {
 		return itemRepository.findByCategory(category);
 	}
 	
-	@PostMapping
+	@PostMapping("/addItem")
 	Item newEmployee(@RequestBody Item newItem) {
 	    return itemRepository.save(newItem);
 	  }
