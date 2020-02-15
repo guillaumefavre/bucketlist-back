@@ -14,10 +14,13 @@ public class BucketListRestController {
 	
 	@Autowired
 	private BucketListRepository bucketListRepository;
+	
+	@Autowired
+	private BucketListService bucketListService;
 
 	@PostMapping("/bucketlist")
 	BucketList newEmployee(@RequestBody BucketList newBucketList) {
-	    return bucketListRepository.save(newBucketList);
+	    return bucketListService.createBucketList(newBucketList);
 	}
 	
 	@GetMapping("/bucketlist/{id}")
