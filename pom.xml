@@ -10,9 +10,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.gfavre</groupId>
-	<artifactId>bucketlist</artifactId>
+	<artifactId>bucketlistapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bucketlist</name>
+	<name>bucketlistapp</name>
 	<description>Bucketlist project</description>
 
 	<properties>
@@ -28,6 +28,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.10</version>
+		    <scope>provided</scope>
 		</dependency>
 
 		<dependency>

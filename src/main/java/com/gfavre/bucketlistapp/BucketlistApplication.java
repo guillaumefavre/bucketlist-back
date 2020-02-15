@@ -1,4 +1,4 @@
-package com.gfavre.bucketlist;
+package com.gfavre.bucketlistapp;
 
 import java.util.Arrays;
 
@@ -8,6 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+
+import com.gfavre.bucketlistapp.bucketlist.BucketList;
+import com.gfavre.bucketlistapp.item.Item;
+import com.gfavre.bucketlistapp.item.ItemRepository;
 
 @SpringBootApplication
 public class BucketlistApplication implements CommandLineRunner {

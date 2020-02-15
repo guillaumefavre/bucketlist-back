@@ -1,4 +1,4 @@
-package com.gfavre.bucketlist;
+package com.gfavre.bucketlistapp.item;
 
 import java.util.List;
 
