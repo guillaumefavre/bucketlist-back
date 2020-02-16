@@ -1,5 +1,6 @@
 package com.gfavre.bucketlistapp.bucketlist;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,5 +28,11 @@ public class BucketListRestController {
 	@GetMapping("/bucketlist/{id}")
 	Optional<BucketList> one(@PathVariable String id) {
 		return bucketListRepository.findById(id);
+	}
+	
+	@GetMapping("/bucketlist/{id}/searchByCategory")
+	Optional<BucketList> one(@PathVariable String id, @RequestParam(value = "category") String category) {
+//		return bucketListService.testSearchByCategory(id, category);
+		return bucketListRepository.findByCategory(id, category);
 	}
 }
