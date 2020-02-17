@@ -31,8 +31,7 @@ public class BucketListRestController {
 	}
 	
 	@GetMapping("/bucketlist/{id}/searchByCategory")
-	Optional<BucketList> one(@PathVariable String id, @RequestParam(value = "category") String category) {
-//		return bucketListService.testSearchByCategory(id, category);
-		return bucketListRepository.findByCategory(id, category);
+	List<BucketList> one(@PathVariable String id, @RequestParam(value = "category") String category) {
+		return bucketListService.searchByCategory(id, category);
 	}
 }

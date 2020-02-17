@@ -6,6 +6,6 @@ public interface BucketListService {
 	
 	public BucketList createBucketList(BucketList newBucketList);
 	
-	public List<BucketList> testSearchByCategory(String id, String category);
+	public List<BucketList> searchByCategory(String id, String category);
 
 }
