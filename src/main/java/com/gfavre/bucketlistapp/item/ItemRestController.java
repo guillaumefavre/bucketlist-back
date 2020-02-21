@@ -1,7 +1,6 @@
 package com.gfavre.bucketlistapp.item;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gfavre.bucketlistapp.bucketlist.BucketList;
 import com.gfavre.bucketlistapp.bucketlist.BucketListRepository;
+import com.gfavre.bucketlistapp.exceptions.ResourceNotFoundException;
 
 @RestController
 public class ItemRestController {
@@ -30,21 +29,19 @@ public class ItemRestController {
 	
 	@GetMapping("/bucketlist/{bucketListId}/items")
 	List<Item> getItemsByBucketListId(@PathVariable Integer bucketListId) {
-		return itemRepository.findByBucketListId(bucketListId);
+		
+		return bucketListRepository.findById(bucketListId).map(bucketlist -> {
+			return itemRepository.findByBucketListId(bucketListId);
+		}).orElseThrow(() -> new ResourceNotFoundException("Bucketlist not found for id "+bucketListId));
 	}
 	
 	@PostMapping("/bucketlist/{bucketListId}/items")
 	Item addItem(@PathVariable Integer bucketListId, @RequestBody Item newItem) {
-		Optional<BucketList> bucketList = bucketListRepository.findById(bucketListId);
 		
-		if(bucketList.isPresent()) {
-			newItem.setBucketList(bucketList.get());
+		return bucketListRepository.findById(bucketListId).map(bucketlist -> {
+			newItem.setBucketList(bucketlist);
 			return itemRepository.save(newItem);
-		} else {
-			// TODO gérer exception
-			return null;
-		}
-		
+		}).orElseThrow(() -> new ResourceNotFoundException("Bucketlist not found for id "+bucketListId));
 		
 	}
 	
