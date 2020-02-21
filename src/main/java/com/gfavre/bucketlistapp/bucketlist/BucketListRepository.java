@@ -1,13 +1,9 @@
 package com.gfavre.bucketlistapp.bucketlist;
 
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
-
-public interface BucketListRepository extends MongoRepository<BucketList, String> {
+@Repository
+public interface BucketListRepository extends JpaRepository<BucketList, Integer> {
 	
-	@Query(value = "{'itemsList.category' : {$eq : ?1} }", fields="{'itemsList.label' : 1}")
-	public Optional<BucketList> findByCategory(String id, String category);
-
 }

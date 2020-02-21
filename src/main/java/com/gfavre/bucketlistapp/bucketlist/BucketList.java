@@ -1,25 +1,30 @@
 package com.gfavre.bucketlistapp.bucketlist;
 
-import java.util.List;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.gfavre.bucketlistapp.item.Item;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Document(collection = "BucketList")
+@Entity
+@Table(name = "bucketlist")
 public class BucketList {
 	
 	@Id
-	private String id;
+	@GeneratedValue(generator = "bucketlist_generator")
+    @SequenceGenerator(
+            name = "bucketlist_generator",
+            sequenceName = "bucketlist_sequence",
+            initialValue = 1,
+            allocationSize=1
+    )
+	private Integer id;
 	
 	private String title;
-	
-	private List<Item> itemsList;
 
 }
