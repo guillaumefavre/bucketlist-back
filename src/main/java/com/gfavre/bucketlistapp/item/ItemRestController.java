@@ -38,6 +38,13 @@ public class ItemRestController {
 		}).orElseThrow(() -> new ResourceNotFoundException("Bucketlist not found for id "+bucketListId));
 	}
 	
+	@GetMapping("/bucketlist/{bucketListId}/itemsByCategory")
+	List<Item> getItemsByBucketListIdAndCategory(@PathVariable Integer bucketListId, @RequestParam(value = "category") String category) {
+		return bucketListRepository.findById(bucketListId).map(bucketlist -> {
+			return itemRepository.findByBucketListIdAndCategory(bucketListId, category);
+		}).orElseThrow(() -> new ResourceNotFoundException("Bucketlist not found for id "+bucketListId));
+	}
+	
 	@PostMapping("/bucketlist/{bucketListId}/items")
 	Item addItem(@PathVariable Integer bucketListId, @RequestBody Item newItem) {
 		
@@ -74,11 +81,5 @@ public class ItemRestController {
 			return ResponseEntity.ok().build();
 		}).orElseThrow(() -> new ResourceNotFoundException("Item not found for id "+itemId));
 	}
-	
-	@GetMapping("/searchByCategory")
-	public List<Item> itemsByCategory(@RequestParam(value = "category") String category) {
-		return itemRepository.findByCategory(category);
-	}
-	
 
 }

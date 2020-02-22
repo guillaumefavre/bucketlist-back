@@ -15,11 +15,6 @@ public class BucketListRestController {
 	@Autowired
 	private BucketListRepository bucketListRepository;
 	
-//	@PostMapping("/bucketlist")
-//	BucketList newEmployee(@RequestBody BucketList newBucketList) {
-//	    return bucketListService.createBucketList(newBucketList);
-//	}
-	
 	@PostMapping("/bucketlist")
     public BucketList createBucketList(@RequestBody BucketList bucketList) {
         return bucketListRepository.save(bucketList);
@@ -29,9 +24,4 @@ public class BucketListRestController {
 	public Optional<BucketList> one(@PathVariable Integer id) {
 		return bucketListRepository.findById(id);
 	}
-	
-//	@GetMapping("/bucketlist/{id}/searchByCategory")
-//	List<BucketList> one(@PathVariable String id, @RequestParam(value = "category") String category) {
-//		return bucketListService.searchByCategory(id, category);
-//	}
 }

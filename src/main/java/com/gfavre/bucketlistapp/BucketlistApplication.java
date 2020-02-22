@@ -39,11 +39,7 @@ public class BucketlistApplication implements CommandLineRunner {
     System.out.println("--------------------------------");
 //    System.out.println(repository.findByLabel("Courir un marathon"));
     
-    System.out.println("Items found with findByCategory('Voyage'):");
-    System.out.println("--------------------------------");
-    for (Item item : repository.findByCategory("Voyage")) {
-      System.out.println(item);
-    }
+
 
   }
 	
