@@ -3,6 +3,8 @@ package com.gfavre.bucketlistapp.item;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,17 +52,28 @@ public class ItemRestController {
 	public Item updateItem(@PathVariable Integer bucketListId, @PathVariable Integer itemId, @RequestBody Item updatedItem) {
 		
 		if(!bucketListRepository.existsById(bucketListId)) {
-			throw new ResourceNotFoundException("111 Bucketlist not found for id "+bucketListId);
+			throw new ResourceNotFoundException("Bucketlist not found for id "+bucketListId);
 		}
 		
 		return itemRepository.findById(itemId).map(item -> {
 			item.setLabel(updatedItem.getLabel());
 			item.setCategory(updatedItem.getCategory());
 			return itemRepository.save(item);
-		}).orElseThrow(() -> new ResourceNotFoundException("222 Item not found for id "+itemId));
+		}).orElseThrow(() -> new ResourceNotFoundException("Item not found for id "+itemId));
 	}
 	
-	
+	@DeleteMapping("/bucketlist/{bucketListId}/items/{itemId}")
+	public ResponseEntity<?> deleteItem(@PathVariable Integer bucketListId, @PathVariable Integer itemId) {
+		
+		if(!bucketListRepository.existsById(bucketListId)) {
+			throw new ResourceNotFoundException("Bucketlist not found for id "+bucketListId);
+		}
+		
+		return itemRepository.findById(itemId).map(item -> {
+			itemRepository.deleteById(itemId);
+			return ResponseEntity.ok().build();
+		}).orElseThrow(() -> new ResourceNotFoundException("Item not found for id "+itemId));
+	}
 	
 	@GetMapping("/searchByCategory")
 	public List<Item> itemsByCategory(@RequestParam(value = "category") String category) {
