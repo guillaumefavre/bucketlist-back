@@ -26,7 +26,7 @@ public class BucketListRestController {
     }
 	
 	@GetMapping("/bucketlist/{id}")
-	Optional<BucketList> one(@PathVariable Integer id) {
+	public Optional<BucketList> one(@PathVariable Integer id) {
 		return bucketListRepository.findById(id);
 	}
 	

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ public class ItemRestController {
 	}
 	
 	@GetMapping("/bucketlist/{bucketListId}/items")
-	List<Item> getItemsByBucketListId(@PathVariable Integer bucketListId) {
+	public List<Item> getItemsByBucketListId(@PathVariable Integer bucketListId) {
 		
 		return bucketListRepository.findById(bucketListId).map(bucketlist -> {
 			return itemRepository.findByBucketListId(bucketListId);
@@ -45,8 +46,24 @@ public class ItemRestController {
 		
 	}
 	
+	@PutMapping("/bucketlist/{bucketListId}/items/{itemId}")
+	public Item updateItem(@PathVariable Integer bucketListId, @PathVariable Integer itemId, @RequestBody Item updatedItem) {
+		
+		if(!bucketListRepository.existsById(bucketListId)) {
+			throw new ResourceNotFoundException("111 Bucketlist not found for id "+bucketListId);
+		}
+		
+		return itemRepository.findById(itemId).map(item -> {
+			item.setLabel(updatedItem.getLabel());
+			item.setCategory(updatedItem.getCategory());
+			return itemRepository.save(item);
+		}).orElseThrow(() -> new ResourceNotFoundException("222 Item not found for id "+itemId));
+	}
+	
+	
+	
 	@GetMapping("/searchByCategory")
-	List<Item> itemsByCategory(@RequestParam(value = "category") String category) {
+	public List<Item> itemsByCategory(@RequestParam(value = "category") String category) {
 		return itemRepository.findByCategory(category);
 	}
 	
