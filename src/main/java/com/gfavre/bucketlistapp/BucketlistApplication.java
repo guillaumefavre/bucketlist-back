@@ -14,7 +14,7 @@ import com.gfavre.bucketlistapp.item.Item;
 import com.gfavre.bucketlistapp.item.ItemRepository;
 
 @SpringBootApplication
-public class BucketlistApplication implements CommandLineRunner {
+public class BucketlistApplication {
 	
 	@Autowired
 	private ItemRepository repository;
@@ -22,26 +22,6 @@ public class BucketlistApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(BucketlistApplication.class, args);
 	}
-	
-	@Override
-  public void run(String... args) throws Exception {
-
-    // fetch all customers
-    System.out.println("Items found with findAll():");
-    System.out.println("-------------------------------");
-    for (Item item : repository.findAll()) {
-      System.out.println(item);
-    }
-    System.out.println();
-
-    // fetch an individual item
-    System.out.println("Item found with findByLabel('Courir un marathon'):");
-    System.out.println("--------------------------------");
-//    System.out.println(repository.findByLabel("Courir un marathon"));
-    
-
-
-  }
 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
