@@ -65,6 +65,7 @@ public class ItemRestController {
 		return itemRepository.findById(itemId).map(item -> {
 			item.setLabel(updatedItem.getLabel());
 			item.setCategory(updatedItem.getCategory());
+			item.setStatus(updatedItem.getStatus());
 			return itemRepository.save(item);
 		}).orElseThrow(() -> new ResourceNotFoundException("Item not found for id "+itemId));
 	}

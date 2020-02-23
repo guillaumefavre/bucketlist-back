@@ -32,6 +32,7 @@ public class Item {
 	
 	private String label;
 	private String category;
+	private ItemStatus status;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "bucketList_id", nullable = false)
