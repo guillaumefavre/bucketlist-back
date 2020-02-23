@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.gfavre.bucketlistapp.exceptions.ResourceNotFoundException;
+import com.gfavre.bucketlistapp.item.Item;
 
 @RestController
 public class CategoryRestController {
@@ -29,6 +33,14 @@ public class CategoryRestController {
 	@GetMapping("/category")
 	public List<Category> getAllCategories() {
 		return categoryRepository.findAll();
+	}
+	
+	@PutMapping("/category/{id}")
+	public Category updateCategory(@PathVariable Integer id, @RequestBody Category updatedCategory) {
+		return categoryRepository.findById(id).map(category -> {
+			category.setLabel(updatedCategory.getLabel());
+			return categoryRepository.save(category);
+		}).orElseThrow(() -> new ResourceNotFoundException("Category not found for id "+id));
 	}
 
 }
