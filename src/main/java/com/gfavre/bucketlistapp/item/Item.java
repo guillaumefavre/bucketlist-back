@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gfavre.bucketlistapp.bucketlist.BucketList;
+import com.gfavre.bucketlistapp.category.Category;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +32,6 @@ public class Item {
 	private Integer id;
 	
 	private String label;
-	private String category;
 	private ItemStatus status;
 	
 	@ManyToOne(optional = false)
@@ -39,20 +39,24 @@ public class Item {
 	@JsonIgnore
 	private BucketList bucketList;
 	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "category_id", nullable = false)
+	private Category category;
+	
 	public Item() {
 		
 	}
 	
-	public Item(String category, String label) {
-		this.category = category;
+	public Item(String label, Category category) {
 		this.label = label;
+		this.category = category;
 	}
 	
 	@Override
 	  public String toString() {
 	    return String.format(
-	        "Item[id=%s, label='%s', category='%s']",
-	        id, label, category);
+	        "Item[id=%s, label='%s']",
+	        id, label);
 	  }
 
 
