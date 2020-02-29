@@ -15,6 +15,12 @@ import com.gfavre.bucketlistapp.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Bucketlist composed of items
+ * 
+ * @author guillaume
+ *
+ */
 @Getter
 @Setter
 @Entity

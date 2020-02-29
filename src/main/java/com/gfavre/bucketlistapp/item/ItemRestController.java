@@ -14,10 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gfavre.bucketlistapp.bucketlist.BucketListRepository;
-import com.gfavre.bucketlistapp.category.Category;
 import com.gfavre.bucketlistapp.category.CategoryRepository;
 import com.gfavre.bucketlistapp.exceptions.ResourceNotFoundException;
 
+/**
+ * Item REST controller
+ * 
+ * @author guillaume
+ *
+ */
 @RestController
 public class ItemRestController {
 	
@@ -30,11 +35,12 @@ public class ItemRestController {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
-	@GetMapping("/")
-	String test() {
-		return "Greetings from Spring Boot!!!!";
-	}
-	
+	/**
+	 * Read all items of a bucketlist
+	 * 
+	 * @param bucketListId
+	 * @return
+	 */
 	@GetMapping("/bucketlist/{bucketListId}/items")
 	public List<Item> getItemsByBucketListId(@PathVariable Integer bucketListId) {
 		
@@ -43,6 +49,12 @@ public class ItemRestController {
 		}).orElseThrow(() -> new ResourceNotFoundException("Bucketlist not found for id "+bucketListId));
 	}
 	
+	/**
+	 * Read all items of a category in a a bucketlist
+	 * 
+	 * @param bucketListId
+	 * @return
+	 */
 	@GetMapping("/bucketlist/{bucketListId}/itemsByCategory")
 	List<Item> getItemsByBucketListIdAndCategory(@PathVariable Integer bucketListId, @RequestParam(value = "categoryId") Integer categoryId) {
 		return bucketListRepository.findById(bucketListId).map(bucketlist -> {
@@ -50,6 +62,13 @@ public class ItemRestController {
 		}).orElseThrow(() -> new ResourceNotFoundException("Bucketlist not found for id "+bucketListId));
 	}
 	
+	/**
+	 * A new item in a bucketlist
+	 * 
+	 * @param bucketListId
+	 * @param newItem
+	 * @return
+	 */
 	@PostMapping("/bucketlist/{bucketListId}/items")
 	Item addItem(@PathVariable Integer bucketListId, @RequestBody Item newItem) {
 		
@@ -65,6 +84,14 @@ public class ItemRestController {
 		
 	}
 	
+	/**
+	 * Modify an item of a bucketlist
+	 * 
+	 * @param bucketListId
+	 * @param itemId
+	 * @param updatedItem
+	 * @return
+	 */
 	@PutMapping("/bucketlist/{bucketListId}/items/{itemId}")
 	public Item updateItem(@PathVariable Integer bucketListId, @PathVariable Integer itemId, @RequestBody Item updatedItem) {
 		
@@ -85,6 +112,13 @@ public class ItemRestController {
 		}).orElseThrow(() -> new ResourceNotFoundException("Item not found for id "+itemId));
 	}
 	
+	/**
+	 * Delete an item of a bucketlist
+	 * 
+	 * @param bucketListId
+	 * @param itemId
+	 * @return
+	 */
 	@DeleteMapping("/bucketlist/{bucketListId}/items/{itemId}")
 	public ResponseEntity<?> deleteItem(@PathVariable Integer bucketListId, @PathVariable Integer itemId) {
 		
