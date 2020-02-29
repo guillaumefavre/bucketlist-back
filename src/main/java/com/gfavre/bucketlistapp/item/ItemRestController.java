@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gfavre.bucketlistapp.bucketlist.BucketListRepository;
+import com.gfavre.bucketlistapp.category.Category;
 import com.gfavre.bucketlistapp.category.CategoryRepository;
 import com.gfavre.bucketlistapp.exceptions.ResourceNotFoundException;
 
@@ -43,9 +44,9 @@ public class ItemRestController {
 	}
 	
 	@GetMapping("/bucketlist/{bucketListId}/itemsByCategory")
-	List<Item> getItemsByBucketListIdAndCategory(@PathVariable Integer bucketListId, @RequestParam(value = "category") String category) {
+	List<Item> getItemsByBucketListIdAndCategory(@PathVariable Integer bucketListId, @RequestParam(value = "categoryId") Integer categoryId) {
 		return bucketListRepository.findById(bucketListId).map(bucketlist -> {
-			return itemRepository.findByBucketListIdAndCategory(bucketListId, category);
+			return itemRepository.findByBucketListIdAndCategoryId(bucketListId, categoryId);
 		}).orElseThrow(() -> new ResourceNotFoundException("Bucketlist not found for id "+bucketListId));
 	}
 	

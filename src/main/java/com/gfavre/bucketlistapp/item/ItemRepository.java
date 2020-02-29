@@ -10,6 +10,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	
 	public List<Item> findByBucketListId(Integer bucketListId);
 	
-	public List<Item> findByBucketListIdAndCategory(Integer bucketListId, String category);
+	public List<Item> findByBucketListIdAndCategoryId(Integer bucketListId, Integer idCategory);
 	
 }
